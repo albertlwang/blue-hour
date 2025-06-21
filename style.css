@@ -1,0 +1,49 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: sans-serif;
+  background: #e3f2fd;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.controls {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.controls input {
+  width: 50px;
+}
+
+.time-label {
+  font-size: 1.5rem;
+  margin-left: 20px;
+}
+
+#wave-indicator {
+  position: absolute;
+  left: 5px;
+  width: 10px;
+  height: 2px;
+  background-color: #b3b3b3; /* Indicator color */
+  z-index: 100;              /* Ensure it's above the canvas */
+  pointer-events: none;      /* So it doesn't interfere with clicks */
+  mix-blend-mode: multiply;
+}
