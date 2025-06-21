@@ -140,7 +140,7 @@ function resetTimer() {
 function updateButtonStates() {        // Handle button on/off logic
   startBtn.disabled = running;
   pauseBtn.disabled = !running;
-  resetBtn.disabled = !running; // && remainingMs === 0;
+  resetBtn.disabled = !running && remainingMs !== 0;
 }
 
 // MAIN UPDATE LOOP ///////////////////////////////////////
@@ -192,7 +192,7 @@ function update() {
 function updateTimerLabel() {
   const secs = Math.ceil(remainingMs / 1000);
   const hrs = String(Math.floor(secs/3600)).padStart(2, '0');
-  const min = String(Math.floor(secs / 60)).padStart(2, '0');
+  const min = String(Math.floor((secs % 3600) / 60)).padStart(2, '0');
   const sec = String(secs % 60).padStart(2, '0');
   timerLabel.textContent = `${hrs}:${min}:${sec}`;
 }
