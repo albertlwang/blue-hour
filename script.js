@@ -55,7 +55,7 @@ let wave2 = createWave(context, {
   width: vw,
   height: vh,
   segments: 120,                       // Number of points that define the wave
-  waveHeight: 0                      // Starting vertical position
+  waveHeight: 0                    // Starting vertical position
 });
 
 let wave3 = createWave(context, {
@@ -229,7 +229,7 @@ function createWave(context, options) {
     points: [],
     segments: options.segments || 100,
     tweens: [],
-    waveHeight: options.waveHeight || 300,
+    waveHeight: options.waveHeight || 0,
     width: options.width || 800,
     x: options.x || 0,
     y: options.y || 0,
