@@ -48,3 +48,67 @@ canvas {
   pointer-events: none;      /* So it doesn't interfere with clicks */
   mix-blend-mode: multiply;
 }
+
+.controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.time-input {
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.time-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.segment {
+  width: 60px;
+  font-size: 2.5rem;
+  text-align: center;
+  border: none;
+  background: none;
+  border-bottom: 2px solid #333;
+}
+
+.segment:disabled {
+  color: #888;
+}
+
+.arrow {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.colon {
+  font-size: 2.5rem;
+}
+
+.buttons button {
+  font-size: 1.2rem;
+  padding: 8px 16px;
+  margin: 0 5px;
+}
