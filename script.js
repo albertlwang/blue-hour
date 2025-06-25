@@ -188,6 +188,9 @@ function setInputsDisabled(disabled) {
   document.querySelectorAll(".segment, .arrow").forEach(el => {
     el.disabled = disabled;
   });
+  document.querySelectorAll(".colon").forEach(colon => {
+    colon.classList.toggle("readonly", disabled);
+  });
 }
 
 // ======= ANIMATION LOOP ======= //

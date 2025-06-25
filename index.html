@@ -10,30 +10,31 @@
 </head>
 <body>
   <div class="controls">
-  <div class="time-input">
-    <div class="time-segment">
-      <button class="arrow up" data-unit="hours">▲</button>
-      <input id="hours" class="segment" maxlength="2" value="00">
-      <button class="arrow down" data-unit="hours">▼</button>
-    </div>
-    <span class="colon">:</span>
-    <div class="time-segment">
-      <button class="arrow up" data-unit="minutes">▲</button>
-      <input id="minutes" class="segment" maxlength="2" value="00">
-      <button class="arrow down" data-unit="minutes">▼</button>
-    </div>
-    <span class="colon">:</span>
-    <div class="time-segment">
-      <button class="arrow up" data-unit="seconds">▲</button>
-      <input id="seconds" class="segment" maxlength="2" value="30">
-      <button class="arrow down" data-unit="seconds">▼</button>
+    <div class="blur-layer"></div>
+    <div class="time-input">
+      <div class="time-segment">
+        <button class="arrow up" data-unit="hours">▲</button>
+        <input id="hours" class="segment" maxlength="2" value="00">
+        <button class="arrow down" data-unit="hours">▼</button>
+      </div>
+      <span class="colon">:</span>
+      <div class="time-segment">
+        <button class="arrow up" data-unit="minutes">▲</button>
+        <input id="minutes" class="segment" maxlength="2" value="00">
+        <button class="arrow down" data-unit="minutes">▼</button>
+      </div>
+      <span class="colon">:</span>
+      <div class="time-segment">
+        <button class="arrow up" data-unit="seconds">▲</button>
+        <input id="seconds" class="segment" maxlength="2" value="30">
+        <button class="arrow down" data-unit="seconds">▼</button>
+      </div>
     </div>
   </div>
   <div class="buttons">
-    <button id="startstopBtn">Start</button>
-    <button id="resetBtn">Reset</button>
-  </div>
-</div>
+      <button id="startstopBtn">Start</button>
+      <button id="resetBtn">Reset</button>
+    </div>
   <canvas id="canvas"></canvas>
   <div id="wave-indicator"></div>
   <script src="script.js"></script>
