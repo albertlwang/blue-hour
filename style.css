@@ -12,30 +12,7 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-.controls {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.70);
-  backdrop-filter: blur(8px);
-  padding: 10px 20px;
-  border-radius: 12px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.controls input {
-  width: 50px;
-}
-
-.time-label {
-  font-size: 1.5rem;
-  margin-left: 20px;
+  z-index: 1;
 }
 
 #wave-indicator {
@@ -43,8 +20,135 @@ canvas {
   left: 5px;
   width: 10px;
   height: 2px;
-  background-color: #b3b3b3; /* Indicator color */
-  z-index: 100;              /* Ensure it's above the canvas */
-  pointer-events: none;      /* So it doesn't interfere with clicks */
+  background-color: #b3b3b3;
+  z-index: 100;
+  pointer-events: none;
   mix-blend-mode: multiply;
+}
+
+.controls {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0);
+  padding: 20px 30px;
+  border-radius: 20px;
+  /* backdrop-filter: blur(10px); */
+}
+
+.time-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7vw;
+  width: 33vw;
+  max-width: 600px;
+  min-width: 280px;
+  margin-bottom: 20px;
+}
+
+.time-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.segment {
+  width: 100%;
+  font-size: inherit;
+  text-align: center;
+  border: none;
+  color: rgba(0, 0, 0, 0.54);
+  background: none;
+  border-bottom: 2px solid #0000001f;
+}
+
+.segment:disabled {
+  color: rgba(15, 14, 41, 0.166);
+  mix-blend-mode: color-burn;
+  backdrop-filter: blur(10px);
+  /* text-shadow: 0 1px 2px rgba(14, 19, 57, 0.109); */
+  border-bottom: 2px solid #00000000;
+  
+}
+
+.arrow {
+  width: 100%;
+  color: rgba(27, 18, 74, 0.598);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.arrow:disabled {
+  opacity: 0%;
+  cursor: default;
+}
+
+.colon {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: inherit;
+}
+
+.colon.readonly {
+  color: rgba(15, 14, 41, 0.097);
+  mix-blend-mode: color-burn;
+  backdrop-filter: blur(10px);
+}
+
+.segment,
+.arrow,
+.colon {
+  transition: color 1s ease, opacity 1s ease, border-bottom-color 1s ease;
+}
+
+.buttons {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -65%);
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0);
+  /* backdrop-filter: blur(10px); */
+}
+
+.buttons button {
+  border: 1px solid rgba(255, 255, 255, 0.121);
+  opacity: 70%;
+  border-radius: 999px; /* fully rounded pill shape */
+  padding: 0.6em 1.5em;
+  font-size: 1.1rem;
+  font-weight: 500;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.177);
+  color: rgba(40, 40, 63, 0.545);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.309);
+  cursor: pointer;
+  transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  min-width: 6.5em; /* enough for 'Pause' */
+}
+
+.buttons button:not(:disabled):hover {
+  /* opacity: 95%; */
+  transform: scale(1.0);
+}
+
+.buttons button:disabled {
+  opacity: 30%;
+  cursor: default;
 }

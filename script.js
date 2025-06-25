@@ -8,7 +8,7 @@ const minutesInput = document.getElementById("minutes");
 const secondsInput = document.getElementById("seconds");
 const startstopBtn = document.getElementById("startstopBtn");
 const resetBtn = document.getElementById("resetBtn");
-const timerLabel = document.getElementById("timerLabel");
+//const timerLabel = document.getElementById("timerLabel"); // REMOVED**
 const indicator = document.getElementById("wave-indicator");
 
 let vw, vh;
@@ -66,8 +66,11 @@ startstopBtn.addEventListener("click", toggleTimer);
 resetBtn.addEventListener("click", resetTimer);
 gsap.ticker.add(update);
 updateButtonStates();
+initializeTimeInputHandlers();
 
 // ======= TIMER FUNCTIONS ======= //
+
+// Handles the dual functionality of the Start/Pause button
 function toggleTimer() {
   running ? togglePause() : startTimer();
 }
@@ -82,6 +85,7 @@ function startTimer() {
   startTime = performance.now();
   running = true;
   paused = false;
+  setInputsDisabled(true);
   updateButtonStates();
 }
 
@@ -99,6 +103,7 @@ function resetTimer() {
   running = false;
   paused = false;
   remainingMs = totalMs;
+  setInputsDisabled(false);
   updateTimerLabel();
 
   waves.forEach(wave => {
@@ -112,14 +117,80 @@ function resetTimer() {
   updateButtonStates();
 }
 
+// Helper function; defines state in which timer finishes (i.e. reaches 00:00:00)
 function isFinished() {
   return remainingMs === 0 && totalMs !== 0;
 }
 
+// Handles when buttons should be active/inactive
 function updateButtonStates() {
   startstopBtn.textContent = (!running || paused) ? "Start" : "Pause";
   startstopBtn.disabled = isFinished();
   resetBtn.disabled = !(running || isFinished());
+}
+
+function initializeTimeInputHandlers() {
+  document.querySelectorAll(".arrow").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const unit = btn.dataset.unit;
+      const input = document.getElementById(unit);
+      let val = parseInt(input.value) || 0;
+
+      if (unit === "seconds") {
+        const increment = btn.classList.contains("up") ? 15 : -15;
+
+        if (increment > 0) {
+          val = Math.ceil((val + 1) / 15) * 15;
+          if (val >= 60) val = 0;
+        } else {
+          val = Math.floor((val - 1) / 15) * 15;
+          if (val < 0) val = 45;
+        }
+      } else {
+        val += btn.classList.contains("up") ? 1 : -1;
+        if (unit === "minutes") {
+          val = Math.max(0, Math.min(59, val));
+        } else {
+          val = Math.max(0, val);
+        }
+      }
+
+      input.value = String(val).padStart(2, "0");
+    });
+  });
+
+  ["hours", "minutes", "seconds"].forEach(id => {
+    const input = document.getElementById(id);
+
+    // Allow only digits during input
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "");
+    });
+
+    // Format on blur or Enter
+    const finalizeInput = () => {
+      let val = parseInt(input.value, 10) || 0;
+      if (id !== "hours") val = Math.min(59, val);
+      input.value = String(Math.max(0, val)).padStart(2, "0");
+      //updateTimerLabel();
+    };
+
+    input.addEventListener("blur", finalizeInput);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        input.blur(); // triggers blur + formatting
+      }
+    });
+  });
+}
+
+function setInputsDisabled(disabled) {
+  document.querySelectorAll(".segment, .arrow").forEach(el => {
+    el.disabled = disabled;
+  });
+  document.querySelectorAll(".colon").forEach(colon => {
+    colon.classList.toggle("readonly", disabled);
+  });
 }
 
 // ======= ANIMATION LOOP ======= //
@@ -144,7 +215,8 @@ function update() {
     waves.forEach(wave => wave.waveHeight = vh * (1 - progress));
   }
 
-  updateTimerLabel();
+  // Only update timer when running or finished -> otherwise timer never changes, or can't get final update to reach 00
+  if(running || isFinished()) updateTimerLabel();
 
   context.clearRect(0, 0, vw, vh);
   context.globalCompositeOperation = "soft-light";
@@ -154,12 +226,16 @@ function update() {
 }
 
 // ======= DISPLAY FUNCTIONS ======= //
+
 function updateTimerLabel() {
-  const secs = Math.ceil(remainingMs / 1000);
-  const hrs = String(Math.floor(secs / 3600)).padStart(2, "0");
-  const min = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
-  const sec = String(secs % 60).padStart(2, "0");
-  timerLabel.textContent = `${hrs}:${min}:${sec}`;
+  const totalSeconds = Math.ceil(remainingMs / 1000);
+  const hrs = Math.floor(totalSeconds / 3600);
+  const min = Math.floor((totalSeconds % 3600) / 60);
+  const sec = totalSeconds % 60;
+
+  hoursInput.value = String(hrs).padStart(2, "0");
+  minutesInput.value = String(min).padStart(2, "0");
+  secondsInput.value = String(sec).padStart(2, "0");
 }
 
 // ======= CANVAS RESIZE ======= //
