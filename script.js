@@ -172,7 +172,6 @@ function initializeTimeInputHandlers() {
       let val = parseInt(input.value, 10) || 0;
       if (id !== "hours") val = Math.min(59, val);
       input.value = String(Math.max(0, val)).padStart(2, "0");
-      //updateTimerLabel();
     };
 
     input.addEventListener("blur", finalizeInput);
@@ -191,6 +190,9 @@ function setInputsDisabled(disabled) {
   document.querySelectorAll(".colon").forEach(colon => {
     colon.classList.toggle("readonly", disabled);
   });
+  indicator.classList.toggle("visible", disabled);
+  startstopBtn.classList.toggle("running", disabled);
+  resetBtn.classList.toggle("running", disabled);
 }
 
 // ======= ANIMATION LOOP ======= //

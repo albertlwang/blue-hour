@@ -3,7 +3,7 @@ html, body {
   padding: 0;
   height: 100%;
   overflow: hidden;
-  font-family: sans-serif;
+  font-family: Helvetica, sans-serif;
   background: #e3f2fd;
 }
 
@@ -16,6 +16,7 @@ canvas {
 }
 
 #wave-indicator {
+  visibility: hidden;
   position: absolute;
   left: 5px;
   width: 10px;
@@ -26,11 +27,15 @@ canvas {
   mix-blend-mode: multiply;
 }
 
+#wave-indicator.visible {
+  visibility: visible;
+}
+
 .controls {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -40%);
+  transform: translate(-50%, -50%);
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -38,7 +43,6 @@ canvas {
   background: rgba(255, 255, 255, 0);
   padding: 20px 30px;
   border-radius: 20px;
-  /* backdrop-filter: blur(10px); */
 }
 
 .time-input {
@@ -65,7 +69,7 @@ canvas {
   font-size: inherit;
   text-align: center;
   border: none;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(16, 14, 24, 0.566);
   background: none;
   border-bottom: 2px solid #0000001f;
 }
@@ -74,14 +78,13 @@ canvas {
   color: rgba(15, 14, 41, 0.166);
   mix-blend-mode: color-burn;
   backdrop-filter: blur(10px);
-  /* text-shadow: 0 1px 2px rgba(14, 19, 57, 0.109); */
   border-bottom: 2px solid #00000000;
   
 }
 
 .arrow {
   width: 100%;
-  color: rgba(27, 18, 74, 0.598);
+  color: rgba(16, 14, 24, 0.359);
   background: none;
   border: none;
   font-size: 1.2rem;
@@ -94,7 +97,7 @@ canvas {
 }
 
 .colon {
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(16, 14, 24, 0.566);
   font-size: inherit;
 }
 
@@ -111,42 +114,36 @@ canvas {
 }
 
 .buttons {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -65%);
   display: flex;
   gap: 1rem;
   justify-content: center;
-  z-index: 100;
+  z-index: 0;
   padding: 20px 30px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0);
-  /* backdrop-filter: blur(10px); */
 }
 
 .buttons button {
-  border: 1px solid rgba(255, 255, 255, 0.121);
-  opacity: 70%;
+  border: none;
   border-radius: 999px; /* fully rounded pill shape */
   padding: 0.6em 1.5em;
   font-size: 1.1rem;
   font-weight: 500;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.177);
-  color: rgba(40, 40, 63, 0.545);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.309);
+  z-index: 0;
+  background: #e3f2fd;
+  color: rgba(19, 19, 53, 0.332);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.202);
   cursor: pointer;
-  transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.5s ease, background 1s ease;
   min-width: 6.5em; /* enough for 'Pause' */
 }
 
-.buttons button:not(:disabled):hover {
-  /* opacity: 95%; */
-  transform: scale(1.0);
+.buttons button.running {
+  background: #e3f2fd08;
+  backdrop-filter: blur(10px);
 }
+
+/* .buttons button.running:not(:disabled):hover { */
+  /* opacity: 95%; */
+/* } */
 
 .buttons button:disabled {
   opacity: 30%;
