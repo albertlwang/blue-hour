@@ -3,12 +3,14 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const resolution = window.devicePixelRatio || 1;
 
+const enterBtn = document.getElementById("enterBtn");
+const homeScreen = document.getElementsByClassName("home-screen")[0];
+const controls = document.getElementsByClassName("controls")[0];
 const hoursInput = document.getElementById("hours");
 const minutesInput = document.getElementById("minutes");
 const secondsInput = document.getElementById("seconds");
 const startstopBtn = document.getElementById("startstopBtn");
 const resetBtn = document.getElementById("resetBtn");
-//const timerLabel = document.getElementById("timerLabel"); // REMOVED**
 const indicator = document.getElementById("wave-indicator");
 
 let vw, vh;
@@ -62,6 +64,7 @@ waves.push(
 
 // ======= EVENT LISTENERS ======= //
 window.addEventListener("resize", () => (resized = true));
+enterBtn.addEventListener("click", enterPage);
 startstopBtn.addEventListener("click", toggleTimer);
 resetBtn.addEventListener("click", resetTimer);
 gsap.ticker.add(update);
@@ -106,13 +109,7 @@ function resetTimer() {
   setInputsDisabled(false);
   updateTimerLabel();
 
-  waves.forEach(wave => {
-    gsap.to(wave, {
-      duration: wave.waveHeight / vh + 0.5,
-      waveHeight: 0,
-      ease: "sine.out"
-    });
-  });
+  resetWaves();
 
   updateButtonStates();
 }
@@ -263,7 +260,7 @@ function createWave(context, options = {}) {
     points: [],
     segments: options.segments || 100,
     tweens: [],
-    waveHeight: options.waveHeight || 0,
+    waveHeight: options.waveHeight || 250,
     width: options.width || 800,
     x: options.x || 0,
     y: options.y || 0,
@@ -328,4 +325,21 @@ function createWave(context, options = {}) {
     const interval = wave.width / wave.segments;
     wave.points.forEach((p, i) => (p.x = wave.x + i * interval));
   }
+}
+
+function resetWaves() {
+  waves.forEach(wave => {
+    gsap.to(wave, {
+      duration: wave.waveHeight / vh + 0.5,
+      waveHeight: 0,
+      ease: "sine.out"
+    });
+  });
+}
+
+// ======= HOME PAGE ======= //
+function enterPage() {
+  homeScreen.classList.toggle("hidden", true);
+  controls.classList.toggle("hidden", false);
+  resetWaves();
 }

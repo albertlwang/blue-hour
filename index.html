@@ -9,7 +9,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-  <div class="controls">
+  <div class="home-screen">
+    <span id="title">Blue Hour</span>
+    <span id="sub-head">Calm your mind. Deepen your focus.</span>
+    <button id="enterBtn">></button>
+  </div>
+  <div class="controls hidden">
     <div class="time-input">
       <div class="time-segment">
         <button class="arrow up" data-unit="hours">▲</button>
@@ -31,7 +36,7 @@
     </div>
     <div class="buttons">
       <button id="startstopBtn">Start</button>
-      <button id="resetBtn">Reset</button>
+      <button id="resetBtn" disabled>Reset</button>
     </div>
   </div>
   <canvas id="canvas"></canvas>
