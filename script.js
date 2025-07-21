@@ -13,6 +13,9 @@ const startstopBtn = document.getElementById("startstopBtn");
 const resetBtn = document.getElementById("resetBtn");
 const indicator = document.getElementById("wave-indicator");
 
+const timerSound = new Audio('public/sounds/alarm-sound.mp3');
+
+
 let vw, vh;
 let waves = [];
 let resized = false;
@@ -84,6 +87,12 @@ function startTimer() {
   const seconds = parseInt(secondsInput.value) || 0;
 
   totalMs = (hours * 3600 + minutes * 60 + seconds) * 1000;
+
+  if(totalMs <= 0) {    // timer must be set to > 0
+    alert('Please select a time greater than 0s.');
+    return;
+  }
+
   remainingMs = totalMs;
   startTime = performance.now();
   running = true;
@@ -111,6 +120,9 @@ function resetTimer() {
 
   resetWaves();
 
+  timerSound.pause();           // pause timer sound
+  timerSound.currentTime = 0;   // rewind sound back to start
+
   updateButtonStates();
 }
 
@@ -121,7 +133,7 @@ function isFinished() {
 
 // Handles when buttons should be active/inactive
 function updateButtonStates() {
-  startstopBtn.textContent = (!running || paused) ? "Start" : "Pause";
+  startstopBtn.dataset.state = (!running || paused) ? "Start" : "Pause";
   startstopBtn.disabled = isFinished();
   resetBtn.disabled = !(running || isFinished());
 }
@@ -216,6 +228,11 @@ function update() {
 
   // Only update timer when running or finished -> otherwise timer never changes, or can't get final update to reach 00
   if(running || isFinished()) updateTimerLabel();
+
+  // Play timer alarm sound if finished
+  if(isFinished()) timerSound.play().catch((err) => {
+    console.error('Sound failed to play.', err);
+  });
 
   context.clearRect(0, 0, vw, vh);
   context.globalCompositeOperation = "soft-light";

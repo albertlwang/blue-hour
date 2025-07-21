@@ -13,9 +13,9 @@ to represent time passing — great for studying, working, or mindfulness sessio
 ## Demo
 Try it live: [https://albertlwang.github.io/blue-hour/]
 
-![Screenshot](images/screenshot1.png)
-![Screenshot](images/screenshot2.png)
-![Screenshot](images/screenshot3.png)
+![Screenshot](public/images/screenshot1.png)
+![Screenshot](public/images/screenshot2.png)
+![Screenshot](public/images/screenshot3.png)
 
 ## Getting Started
 1. Clone the repo:
